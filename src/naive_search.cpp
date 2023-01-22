@@ -16,22 +16,21 @@ using namespace std::chrono;
 // prints out all occurences of query inside of ref
 void findOccurences(std::vector<seqan3::dna5> const& ref, std::vector<seqan3::dna5> const& query) {
  
-    //bool found = false;
-    //seqan3::debug_stream << query << ": ";
+    bool found = false;
     auto res = std::begin(ref);
     while (res != std::end(ref)) {
         res = std::search(res, std::end(ref), std::begin(query), std::end(query));
         if(res != std::end(ref)) {
-            //if (!found) {
-                //found = true;
-                //std::cout << "found it at the position(s):";
-                //}
-            //std::cout << " " << res - ref.begin();
+            if (!found) {
+                found = true;
+                std::cout << "found it at the position(s):";
+                }
+            std::cout << " " << res - ref.begin();
             res ++;           
         }
     } 
-   // if(!found) std::cout << "couldn't find it."; 
-   // std::cout << "\n";
+    if(!found) std::cout << "couldn't find it."; 
+    std::cout << "\n";
     
 }
 
@@ -92,39 +91,36 @@ int main(int argc, char const* const* argv) {
         queries_temp.clear();
     }
  
+    /* // for progress bar
     int iPercent = 0;
     int iPercentShow = -1;
     int iCounter = 0;
-
-    //for (int i = 1000000; i>=1000; i=i/10) {
-        queries.resize(query_size);
-        auto start = high_resolution_clock::now();
-        for (auto& r : reference) {
-            for (auto& q : queries) {
-                iCounter++;
-                //!TODO !ImplementMe apply binary search and find q  in reference using binary search on `suffixarray`
-                // You can choose if you want to use binary search based on "naive approach", "mlr-trick", "lcp"
-                //seqan3::debug_stream << q << ": ";
-                findOccurences(r, q);
-                iPercent = (int)((static_cast<float>(iCounter) / query_size) * 100);
-                if (iPercent > iPercentShow) {
-                    std::cout << iPercent << "% " << std::flush;
-                    iPercentShow += 5;
-                }
-            } 
-        }    
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        //
-        std::cout << "\n" << "Time taken by naive search in " << queries.size() << " queries: "
-            << duration.count() << " microseconds" << "\n";
-    //}
-/*
+    */
+    //time tracking
+    auto start = high_resolution_clock::now();
     for (auto& r : reference) {
         for (auto& q : queries) {
+            //iCounter++; // for progress bar
+            //!TODO !ImplementMe apply binary search and find q  in reference using binary search on `suffixarray`
+            // You can choose if you want to use binary search based on "naive approach", "mlr-trick", "lcp"
+            seqan3::debug_stream << q << ": ";
+            //naive search
             findOccurences(r, q);
-        }
-    }
-*/
+            // progress bar
+            /*
+            iPercent = (int)((static_cast<float>(iCounter) / query_size) * 100);
+            if (iPercent > iPercentShow) {
+                std::cout << iPercent << "% " << std::flush;
+                iPercentShow += 5;
+            }*/
+        } 
+    }    
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    
+    std::cout << "\n" << "Time taken by naive search in " << queries.size() << " queries: "
+        << duration.count() << " microseconds" << "\n";
+
+
     return 0;
 }
