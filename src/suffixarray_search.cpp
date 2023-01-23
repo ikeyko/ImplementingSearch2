@@ -15,8 +15,82 @@
 
 using namespace std::chrono;
 
-
 void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m, saidx_t n) {
+    unsigned index = 0; //Suffix index
+
+     bool found = false;
+    
+    // vector with positions
+    //std::vector<uint32_t> hits;
+
+    if (n == 0) return;
+
+    //if the search character not exist in Alphabet
+    if (query[0] > text[SA[n]]) return;
+    if (query[0] < text[SA[0]]) return;
+
+
+    unsigned Lp, Rp;
+
+    //looking for right interval bound
+    int left = 0;
+    int right = n+1;
+    int middle;
+
+
+    while (Rp >= Lp && index < m) { //repeat check until full pattern found. Stop if bounds crossed
+
+        while (right - left > 1) {
+            middle = ceil((left + right)/2);
+            if (query[0] >= text[SA[middle]]) left = middle;
+            else right = middle;
+        }
+
+        Rp = left;
+
+        //looking for left interval bound
+        left = -1;
+        right = Rp;
+
+        while (right - left > 1) {
+            middle = ceil((left + right)/2);
+            if (query[0] <= text[SA[middle]]) right = middle;
+            else left = middle;
+        }
+
+        Lp = right;
+
+        left = Lp;
+        right = Rp + 1;
+   
+        if (Rp >= Lp) index++; //if check for both suffixes successfull, go to next char
+    }
+
+    while (Rp >= Lp) {
+        //hits.push_back(SA[Lp++]); //push every alignment between bounds in vector hits
+        if (!found) {
+                found = true;
+                std::cout << "found it at the position(s): ";
+                }
+        std::cout << SA[Lp++]<<" ";
+    }
+    //sort(hits.begin(), hits.end());
+    /*
+    if (hits.size() != 0) {
+        if (!found) {
+                found = true;
+                std::cout << "found it at the position(s):";
+                }
+        for (unsigned i = 0; i < hits.size(); ++i) {
+            std::cout << " " << hits[i] ;
+        }
+    }*/
+    if(!found) std::cout << "couldn't find it."; 
+    std::cout<<"\n";
+    
+   // hits.clear();
+}
+void find2(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m, saidx_t n) {
     
     bool found = false;
     
