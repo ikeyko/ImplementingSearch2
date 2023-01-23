@@ -34,11 +34,11 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
 
     //looking for right interval bound
     int left = 0;
-    int right = n+1;
+    int right = n;
     int middle;
 
     int Lp = 0;
-    int Rp = n + 1;
+    int Rp = n;
 
 
     while (Rp >= Lp && index < m) { //repeat check until full pattern found. Stop if bounds crossed
