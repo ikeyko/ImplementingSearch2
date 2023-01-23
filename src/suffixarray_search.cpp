@@ -38,13 +38,13 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
     int middle;
 
     int Lp = 0;
-    int Rp = n;
+    int Rp = n + 1;
 
 
     while (Rp >= Lp && index < m) { //repeat check until full pattern found. Stop if bounds crossed
 
         left = Lp;
-        right = Rp + 1;
+        right = Rp;
 
         while (right - left > 1) {
             middle = ceil((left + right)/2);
@@ -53,7 +53,8 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
         }
 
         Lp = right;
-        left = Lp - 1;
+        if (indexx == 0) left = Lp - 1;
+        else left = Lp;
         right = Rp;
 
         while (right - left > 1) {
