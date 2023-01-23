@@ -48,7 +48,7 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
 
         while (right - left > 1) {
             middle = ceil((left + right)/2);
-            if (query[index] <= text[SA[middle]]) right = middle;
+            if (query[index] <= text[SA[middle]+index]) right = middle;
             else left = middle;
         }
 
@@ -58,7 +58,7 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
 
         while (right - left > 1) {
             middle = ceil((left + right)/2);
-            if (query[index] >= text[SA[middle]]) left = middle;
+            if (query[index] >= text[SA[middle]+index]) left = middle;
             else right = middle;
         }
 
