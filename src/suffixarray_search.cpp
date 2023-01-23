@@ -53,7 +53,7 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
         }
 
         Lp = right;
-        left = Lp - 1;
+        left = Lp;
         right = Rp;
 
         while (right - left > 1) {
@@ -67,6 +67,8 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
         //looking for left interval bound
         //left = Lp;
         //right = Rp;
+        if (text[SA[Lp + index]] != query[index]) {Lp = n+1;} 
+        if (text[SA[Rp + index]] != query[index]) {Rp = -1;} 
 
         if (Rp >= Lp) index++; //if check for both suffixes successfull, go to next char
     }
