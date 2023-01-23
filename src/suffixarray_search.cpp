@@ -30,38 +30,43 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
     if (query[0] < text[SA[0]]) return;
 
 
-    unsigned Lp, Rp;
+    //unsigned Lp, Rp;
 
     //looking for right interval bound
     int left = 0;
     int right = n+1;
     int middle;
 
+    int Lp = 0;
+    int Rp = n + 1;
+
 
     while (Rp >= Lp && index < m) { //repeat check until full pattern found. Stop if bounds crossed
 
+        left = Lp;
+        right = Rp + 1;
+
         while (right - left > 1) {
             middle = ceil((left + right)/2);
-            if (query[0] >= text[SA[middle]]) left = middle;
+            if (query[index] >= text[SA[middle]]) left = middle;
             else right = middle;
         }
 
         Rp = left;
 
         //looking for left interval bound
-        left = -1;
+        left = Lp - 1;
         right = Rp;
 
         while (right - left > 1) {
             middle = ceil((left + right)/2);
-            if (query[0] <= text[SA[middle]]) right = middle;
+            if (query[index] <= text[SA[middle]]) right = middle;
             else left = middle;
         }
 
         Lp = right;
 
-        left = Lp;
-        right = Rp + 1;
+        
    
         if (Rp >= Lp) index++; //if check for both suffixes successfull, go to next char
     }
@@ -225,8 +230,8 @@ int main(int argc, char const* const* argv) {
     //      To make the `reference` compatible with libdivsufsort you can simply
     //      cast it by calling:
     //      `sauchar_t const* str = reinterpret_cast<sauchar_t const*>(reference.data());`
- 
-    
+
+
 
     int n = reference.size();
     sauchar_t const* ref = reinterpret_cast<sauchar_t const*>(reference.data());
