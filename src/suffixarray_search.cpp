@@ -53,7 +53,7 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
         }
 
         Lp = right;
-        if (indexx == 0) left = Lp - 1;
+        if (index == 0) left = Lp - 1;
         else left = Lp;
         right = Rp;
 
