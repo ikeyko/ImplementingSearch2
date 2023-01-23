@@ -72,111 +72,17 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
 
         if (Rp >= Lp) index++; //if check for both suffixes successfull, go to next char
     }
-/*
 
-    if (query[index] <= text[SA[0]])  Lp = 1;
-    else
-        if (query[index] > text[SA[n]]) Lp = n + 1;
-        else {
-            left = 1;
-            right = n;
-            while (right - left > 1) {
-                middle = ceil((left + right)/2);
-                if (query[index] <= test[SA[middle]]) right = middle;
-                else left = middle;
-    }
-    Lp = right;
-    }
-*/
-   
-        
-
-
-
-    //while (Rp >= Lp) {
-        //hits.push_back(SA[Lp++]); //push every alignment between bounds in vector hits
-        //if (!found) {
-                //found = true;
-                //std::cout << "found it at the position(s): ";
-                //}
-        //std::cout << SA[Lp++]<<" "<< std::flush;
-    //}
-
-    //if(!found) std::cout << "couldn't find it."; 
-    //std::cout<<"\n";
-
-}
-void find2(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m, saidx_t n) {
-    
-    bool found = false;
-    
-    // vector with positions
-    std::vector<uint32_t> hits;
-
-    if (n == 0) return;
-
-    //if the search character not exist in Alphabet
-    if (query[0] > text[SA[n]]) return;
-    if (query[0] < text[SA[0]]) return;
-
-
-    unsigned Lp, Rp;
-
-    //looking for right interval bound
-    int left = 0;
-    int right = n+1;
-    int middle;
-
-    while (right - left > 1) {
-        middle = ceil((left + right)/2);
-        if (query[0] >= text[SA[middle]]) left = middle;
-        else right = middle;
-    }
-
-    Rp = left;
-
-    //looking for left interval bound
-    left = -1;
-    right = Rp;
-
-    while (right - left > 1) {
-        middle = ceil((left + right)/2);
-        if (query[0] <= text[SA[middle]]) right = middle;
-        else left = middle;
-    }
-
-    Lp = right;
-
-    unsigned index = 0; //Suffix index
-
-    while (Rp >= Lp && index < m) { //repeat check until full pattern found. Stop if bounds crossed
-
-        while (Rp >= Lp && query[index] != text[SA[Lp]+index]){ //check left suffix
-            ++Lp; //go to next suffix           
-        }
-        while (Rp >= Lp && query[index] != text[SA[Rp]+index]) { //check right suffix
-            --Rp; //go to previous suffix           
-        }      
-        if (Rp >= Lp) index++; //if check for both suffixes successfull, go to next char
-    }
     while (Rp >= Lp) {
-        hits.push_back(SA[Lp++]); //push every alignment between bounds in vector hits
-    }
-    //sort(hits.begin(), hits.end());
-
-    if (hits.size() != 0) {
         if (!found) {
                 found = true;
-                std::cout << "found it at the position(s):";
+                std::cout << "found it at the position(s): ";
                 }
-        for (unsigned i = 0; i < hits.size(); ++i) {
-            std::cout << " " << hits[i] ;
-        }
+        std::cout << SA[Lp++]<<" ";
     }
+
     if(!found) std::cout << "couldn't find it."; 
     std::cout<<"\n";
-    
-    hits.clear();
 
 }
 
@@ -290,7 +196,7 @@ int main(int argc, char const* const* argv) {
         //!TODO !ImplementMe apply binary search and find q  in reference using binary search on `suffixarray`
         // You can choose if you want to use binary search based on "naive approach", "mlr-trick", "lcp"
         int m = q.size();
-        //seqan3::debug_stream << q << ": ";
+        seqan3::debug_stream << q << ": ";
         sauchar_t const* query = reinterpret_cast<sauchar_t const*>(q.data());
         // search function
         find((sauchar_t*)query,(sauchar_t*)ref, SA, m, n);
