@@ -93,29 +93,18 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
 
 
 
-    while (Rp >= Lp) {
+    //while (Rp >= Lp) {
         //hits.push_back(SA[Lp++]); //push every alignment between bounds in vector hits
-        if (!found) {
-                found = true;
-                std::cout << "found it at the position(s): ";
-                }
-        std::cout << SA[Lp++]<<" ";
-    }
-    //sort(hits.begin(), hits.end());
-    /*
-    if (hits.size() != 0) {
-        if (!found) {
-                found = true;
-                std::cout << "found it at the position(s):";
-                }
-        for (unsigned i = 0; i < hits.size(); ++i) {
-            std::cout << " " << hits[i] ;
-        }
-    }*/
-    if(!found) std::cout << "couldn't find it."; 
-    std::cout<<"\n";
-    
-   // hits.clear();
+        //if (!found) {
+                //found = true;
+                //std::cout << "found it at the position(s): ";
+                //}
+        //std::cout << SA[Lp++]<<" "<< std::flush;
+    //}
+
+    //if(!found) std::cout << "couldn't find it."; 
+    //std::cout<<"\n";
+
 }
 void find2(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m, saidx_t n) {
     
@@ -301,7 +290,7 @@ int main(int argc, char const* const* argv) {
         //!TODO !ImplementMe apply binary search and find q  in reference using binary search on `suffixarray`
         // You can choose if you want to use binary search based on "naive approach", "mlr-trick", "lcp"
         int m = q.size();
-        seqan3::debug_stream << q << ": ";
+        //seqan3::debug_stream << q << ": ";
         sauchar_t const* query = reinterpret_cast<sauchar_t const*>(q.data());
         // search function
         find((sauchar_t*)query,(sauchar_t*)ref, SA, m, n);
