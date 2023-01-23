@@ -55,7 +55,7 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
         Rp = left;
 
         //looking for left interval bound
-        left = Lp - 1;
+        left = Lp;
         right = Rp;
 
         while (right - left > 1) {
@@ -70,6 +70,26 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
    
         if (Rp >= Lp) index++; //if check for both suffixes successfull, go to next char
     }
+/*
+
+    if (query[index] <= text[SA[0]])  Lp = 1;
+    else
+        if (query[index] > text[SA[n]]) Lp = n + 1;
+        else {
+            left = 1;
+            right = n;
+            while (right - left > 1) {
+                middle = ceil((left + right)/2);
+                if (query[index] <= test[SA[middle]]) right = middle;
+                else left = middle;
+    }
+    Lp = right;
+    }
+*/
+   
+        
+
+
 
     while (Rp >= Lp) {
         //hits.push_back(SA[Lp++]); //push every alignment between bounds in vector hits
