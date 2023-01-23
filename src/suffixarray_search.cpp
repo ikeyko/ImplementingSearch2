@@ -53,7 +53,7 @@ void find(sauchar_t const* query, const sauchar_t* text, saidx_t *SA, saidx_t m,
         }
 
         Lp = right;
-        left = Lp;
+        left = Lp - 1;
         right = Rp;
 
         while (right - left > 1) {
